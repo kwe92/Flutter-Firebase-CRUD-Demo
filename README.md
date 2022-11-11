@@ -1,3 +1,3 @@
 # firebasedemo
 
-A Flutter project with demonstrating CRUD functionality with Cloud Firebase.
+A Flutter project demonstrating CRUD functionality with Cloud Firebase.
