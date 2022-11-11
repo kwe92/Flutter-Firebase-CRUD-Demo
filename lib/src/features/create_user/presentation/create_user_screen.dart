@@ -1,4 +1,6 @@
+import 'package:date_field/date_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebasedemo/src/constants/source_of_truth.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatefulWidget {
@@ -9,7 +11,15 @@ class UserScreen extends StatefulWidget {
   State<UserScreen> createState() => _UserScreenState();
 }
 
+InputDecoration decoration({required String label}) => InputDecoration(
+      label: Text(label),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+    );
+
 class _UserScreenState extends State<UserScreen> {
+  DateTime? selectedDate;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,20 +28,44 @@ class _UserScreenState extends State<UserScreen> {
           title: Text(widget.title),
         ),
         body: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: SizedBox(
-              height: 30,
+          child:
+              ListView(padding: const EdgeInsets.all(24.0), children: <Widget>[
+            SizedBox(
+              height: 60,
               child: TextField(
-                decoration: InputDecoration(
-                  label: const Text('Name'),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
+                decoration: decoration(
+                  label: 'Name',
+                ),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+            gaph24,
+            SizedBox(
+              height: 60,
+              child: TextField(
+                decoration: decoration(
+                  label: 'Age',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            gaph24,
+            SizedBox(
+              height: 60,
+              child: DateTimeField(
+                mode: DateTimeFieldPickerMode.date,
+                selectedDate: selectedDate,
+                onDateSelected: (DateTime value) {
+                  setState(() {
+                    selectedDate = value;
+                  });
+                },
+                decoration: decoration(
+                  label: 'Birthday',
                 ),
               ),
             ),
-          ),
+          ]),
         ),
       ),
     );
