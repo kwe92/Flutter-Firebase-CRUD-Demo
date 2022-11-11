@@ -3,3 +3,7 @@ import 'package:flutter/material.dart';
 const gaph24 = SizedBox(
   height: 24.0,
 );
+
+const gaph12 = SizedBox(
+  height: 12.0,
+);
