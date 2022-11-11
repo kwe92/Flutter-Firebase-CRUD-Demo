@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/src/constants/source_of_truth.dart';
+import 'package:firebasedemo/src/features/create_user/domain/user.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatefulWidget {
@@ -11,14 +13,25 @@ class UserScreen extends StatefulWidget {
   State<UserScreen> createState() => _UserScreenState();
 }
 
-InputDecoration decoration({required String label}) => InputDecoration(
+InputDecoration _decoration({required String label}) => InputDecoration(
       label: Text(label),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
       ),
     );
 
+Future<void> _createUser(
+    {required name, required age, required birthdate}) async {
+  final docUsers = FirebaseFirestore.instance.collection('users').doc();
+  final newUser =
+      UserModel(id: docUsers.id, name: name, age: age, birthdate: birthdate);
+  final json = newUser.toJSON();
+  await docUsers.set(json);
+}
+
 class _UserScreenState extends State<UserScreen> {
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
   DateTime? selectedDate;
   @override
   Widget build(BuildContext context) {
@@ -33,7 +46,8 @@ class _UserScreenState extends State<UserScreen> {
             SizedBox(
               height: 60,
               child: TextField(
-                decoration: decoration(
+                controller: nameController,
+                decoration: _decoration(
                   label: 'Name',
                 ),
                 keyboardType: TextInputType.text,
@@ -43,7 +57,8 @@ class _UserScreenState extends State<UserScreen> {
             SizedBox(
               height: 60,
               child: TextField(
-                decoration: decoration(
+                controller: ageController,
+                decoration: _decoration(
                   label: 'Age',
                 ),
                 keyboardType: TextInputType.number,
@@ -56,15 +71,32 @@ class _UserScreenState extends State<UserScreen> {
                 mode: DateTimeFieldPickerMode.date,
                 selectedDate: selectedDate,
                 onDateSelected: (DateTime value) {
+                  //TODO: Parse Datetime from selected date
                   setState(() {
                     selectedDate = value;
                   });
                 },
-                decoration: decoration(
+                decoration: _decoration(
                   label: 'Birthday',
                 ),
               ),
             ),
+            gaph12,
+            SizedBox(
+              height: 38.0,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (nameController.text.isNotEmpty &&
+                      ageController.text.isNotEmpty) {
+                    _createUser(
+                        name: nameController.text,
+                        age: int.parse(ageController.text),
+                        birthdate: selectedDate);
+                  }
+                },
+                child: const Text('Create User'),
+              ),
+            )
           ]),
         ),
       ),
