@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // User Model Class
@@ -12,14 +13,18 @@ class UserModel {
   final String name;
   final int age;
   final DateTime? birthdate;
+  static DateTime _fromTimeStamp(Timestamp timestamp) {
+    return DateTime.fromMillisecondsSinceEpoch(
+        timestamp.millisecondsSinceEpoch);
+  }
 
   // Constructor to create a UserModel Object from a json object passed
   factory UserModel.fromJSON(Map<String, Object?> json) => UserModel(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      age: int.parse(json['age'] as String),
-      birthdate: json['birthdate'].toString().isNotEmpty
-          ? DateTime.parse(json['birthdate'].toString())
+      id: json['id'].toString(),
+      name: json['name'].toString(),
+      age: int.parse(json['age'].toString()),
+      birthdate: json['birthdate'] != null
+          ? UserModel._fromTimeStamp(json['birthdate'] as Timestamp)
           : null);
 
   // Returns the user as a map or json object
