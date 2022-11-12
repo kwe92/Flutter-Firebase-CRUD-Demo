@@ -11,14 +11,15 @@ class CustomScaffold extends StatelessWidget {
   final FloatingActionButton? floatingActionButton;
 
   @override
-  Widget build(BuildContext context) => SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(title),
-          ),
-          body: body,
-          floatingActionButton:
-              floatingActionButton != null ? floatingActionButton : null,
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
         ),
-      );
+        body: body,
+        floatingActionButton: floatingActionButton,
+      ),
+    );
+  }
 }

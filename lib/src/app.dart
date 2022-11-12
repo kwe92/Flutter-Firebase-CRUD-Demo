@@ -1,5 +1,5 @@
 import 'package:firebasedemo/src/features/create_user/presentation/create_user_screen.dart';
-import 'package:firebasedemo/src/features/view_users/current_users.dart';
+import 'package:firebasedemo/src/features/view_users/presentation/current_users.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //theme: ThemeData(brightness: Brightness.dark),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
         '/': (context) => const CurrentUserScreen(),

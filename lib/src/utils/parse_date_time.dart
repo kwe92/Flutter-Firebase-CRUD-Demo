@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Returns a DateTime object in String format
 String parseDateTime(DateTime? dateTime) {
   if (dateTime == null) {
     return '';

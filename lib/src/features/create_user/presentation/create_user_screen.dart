@@ -15,6 +15,7 @@ class UserScreen extends StatefulWidget {
   State<UserScreen> createState() => _UserScreenState();
 }
 
+//TODO: Move  _createUser logic to a repository and a data folder | user Riverpod architecture
 Future<void> _createUser(
     {required name, required age, required birthdate}) async {
   final docUsers = FirebaseFirestore.instance.collection('users').doc();
@@ -28,12 +29,14 @@ class _UserScreenState extends State<UserScreen> {
   final nameController = TextEditingController();
   final ageController = TextEditingController();
   DateTime? selectedDate;
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: widget.title,
       body: Center(
         child: ListView(
+          //TODO: move EdgeInsets to source of truth file
           padding: const EdgeInsets.all(24.0),
           children: <Widget>[
             customTextField(
@@ -51,6 +54,7 @@ class _UserScreenState extends State<UserScreen> {
                 mode: DateTimeFieldPickerMode.date,
                 selectedDate: selectedDate,
                 onDateSelected: (DateTime value) {
+                  // sets selectedDate to the values the user selected from the drop down
                   setState(() {
                     selectedDate = value;
                   });

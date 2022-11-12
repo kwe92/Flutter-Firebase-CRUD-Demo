@@ -11,6 +11,7 @@ class CurrentUserScreen extends StatefulWidget {
   State<CurrentUserScreen> createState() => _CurrentUserScreenState();
 }
 
+//TODO: Add a data folder and move watchUsers() into a repository as a method | Riverpod
 Stream<List<UserModel>> watchUsers() =>
     FirebaseFirestore.instance.collection('users').snapshots().map((snapshot) =>
         snapshot.docs.map((doc) => UserModel.fromJSON(doc.data())).toList());
@@ -31,9 +32,13 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
               child: Text(snapshot.error.toString()),
             );
           }
-          final users = snapshot.data;
-          //print(users);
+
+          final List<UserModel>? users = snapshot.data;
+
+          //debugPrint(users.toString()); //// Uused for debuging and checking the data recieved from Firebase
+
           return Padding(
+            //TODO: move EdgeInsets to source of truth file
             padding: const EdgeInsets.only(top: 12.0),
             child: ListView.builder(
               itemCount: users?.length,

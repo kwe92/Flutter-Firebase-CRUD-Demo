@@ -1,3 +1,4 @@
+import 'package:firebasedemo/src/constants/source_of_truth.dart';
 import 'package:firebasedemo/src/features/create_user/domain/user.dart';
 import 'package:firebasedemo/src/utils/parse_date_time.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,14 @@ Widget customListTile(UserModel user) {
             user.age.toString(),
           ),
         ),
-        title: Text(user.name),
-        subtitle: Text(parseDateTime(user.birthdate)),
+        title: Text(
+          user.name,
+          style: nameListTileTextStyle,
+        ),
+        subtitle: Text(
+          // According to Law of Demeter should we move the parser??
+          parseDateTime(user.birthdate),
+        ),
       ),
     ),
   );
