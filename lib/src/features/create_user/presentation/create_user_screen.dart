@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/src/constants/source_of_truth.dart';
 import 'package:firebasedemo/src/features/create_user/domain/user.dart';
 import 'package:firebasedemo/src/features/create_user/presentation/custom_text_field.dart';
 import 'package:firebasedemo/src/widgets/main_scaffold.dart';
+import 'package:firebasedemo/src/widgets/text_field_decoration.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatefulWidget {
@@ -14,14 +14,6 @@ class UserScreen extends StatefulWidget {
   @override
   State<UserScreen> createState() => _UserScreenState();
 }
-
-// Function for text field decorations
-InputDecoration _decoration({required String label}) => InputDecoration(
-      label: Text(label),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-    );
 
 Future<void> _createUser(
     {required name, required age, required birthdate}) async {
@@ -46,12 +38,12 @@ class _UserScreenState extends State<UserScreen> {
           children: <Widget>[
             customTextField(
               controller: nameController,
-              decoration: _decoration(label: 'Name'),
+              decoration: decoration(label: 'Name'),
             ),
             gaph24,
             customTextField(
                 controller: ageController,
-                decoration: _decoration(label: 'Age'),
+                decoration: decoration(label: 'Age'),
                 keyboardType: TextInputType.number),
             gaph24,
             customSizedBox(
@@ -63,7 +55,7 @@ class _UserScreenState extends State<UserScreen> {
                     selectedDate = value;
                   });
                 },
-                decoration: _decoration(
+                decoration: decoration(
                   label: 'Birthday',
                 ),
               ),

@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebasedemo/src/features/create_user/domain/user.dart';
+import 'package:firebasedemo/src/widgets/custom_list_tile.dart';
 import 'package:firebasedemo/src/widgets/main_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CurrentUserScreen extends StatefulWidget {
   const CurrentUserScreen({super.key});
@@ -33,7 +32,7 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
             );
           }
           final users = snapshot.data;
-          print(users);
+          //print(users);
           return Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: ListView.builder(
@@ -51,26 +50,4 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
       ),
     );
   }
-}
-
-Widget customListTile(UserModel user) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.grey),
-        // color: Colors.deepPurple[200],
-      ),
-      child: ListTile(
-        leading: CircleAvatar(
-          child: Text(
-            user.age.toString(),
-          ),
-        ),
-        title: Text(user.name),
-        subtitle: Text(user.birthdate.toString()),
-      ),
-    ),
-  );
 }

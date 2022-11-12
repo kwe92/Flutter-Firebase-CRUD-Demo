@@ -13,19 +13,21 @@ class UserModel {
   final String name;
   final int age;
   final DateTime? birthdate;
-  static DateTime _fromTimeStamp(Timestamp timestamp) {
-    return DateTime.fromMillisecondsSinceEpoch(
-        timestamp.millisecondsSinceEpoch);
-  }
+
+  // private implementation detail to parse TimeStamp
+  static DateTime _fromTimeStamp(Timestamp timestamp) =>
+      DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
 
   // Constructor to create a UserModel Object from a json object passed
-  factory UserModel.fromJSON(Map<String, Object?> json) => UserModel(
-      id: json['id'].toString(),
-      name: json['name'].toString(),
-      age: int.parse(json['age'].toString()),
-      birthdate: json['birthdate'] != null
-          ? UserModel._fromTimeStamp(json['birthdate'] as Timestamp)
-          : null);
+  factory UserModel.fromJSON(Map<String, Object?> json) {
+    return UserModel(
+        id: json['id'].toString(),
+        name: json['name'].toString(),
+        age: int.parse(json['age'].toString()),
+        birthdate: json['birthdate'] != null
+            ? UserModel._fromTimeStamp(json['birthdate'] as Timestamp)
+            : null);
+  }
 
   // Returns the user as a map or json object
   Map<String, Object?> toJSON() => {
@@ -36,7 +38,6 @@ class UserModel {
       };
 
   @override
-  String toString() {
-    return 'UserModel(id: $id, name: $name, age: $age, birthdate: $birthdate)';
-  }
+  String toString() =>
+      'UserModel(id: $id, name: $name, age: $age, birthdate: $birthdate)';
 }

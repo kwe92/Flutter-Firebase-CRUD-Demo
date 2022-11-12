@@ -14,8 +14,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => const CurrentUserScreen(),
         '/createuser': (context) => const UserScreen(title: _title)
       },
-      // home: CurrentUserScreen(),
-      // UserScreen(title: _title),
     );
   }
 }
