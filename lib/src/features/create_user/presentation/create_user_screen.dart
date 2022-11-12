@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
 import 'package:firebasedemo/src/constants/source_of_truth.dart';
 import 'package:firebasedemo/src/features/create_user/domain/user.dart';
-import 'package:firebasedemo/src/features/create_user/presentation/custom_text_field.dart';
-import 'package:firebasedemo/src/widgets/main_scaffold.dart';
-import 'package:firebasedemo/src/widgets/text_field_decoration.dart';
+import 'package:firebasedemo/src/common_widgets/custom_text_field.dart';
+import 'package:firebasedemo/src/common_widgets/main_scaffold.dart';
+import 'package:firebasedemo/src/common_widgets/text_field_decoration.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatefulWidget {

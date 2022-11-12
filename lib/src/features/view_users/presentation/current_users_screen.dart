@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebasedemo/src/features/create_user/domain/user.dart';
-import 'package:firebasedemo/src/widgets/custom_list_tile.dart';
-import 'package:firebasedemo/src/widgets/main_scaffold.dart';
+import 'package:firebasedemo/src/common_widgets/custom_list_tile.dart';
+import 'package:firebasedemo/src/common_widgets/main_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class CurrentUserScreen extends StatefulWidget {
@@ -12,6 +12,7 @@ class CurrentUserScreen extends StatefulWidget {
 }
 
 //TODO: Add a data folder and move watchUsers() into a repository as a method | Riverpod
+
 Stream<List<UserModel>> watchUsers() =>
     FirebaseFirestore.instance.collection('users').snapshots().map((snapshot) =>
         snapshot.docs.map((doc) => UserModel.fromJSON(doc.data())).toList());
@@ -21,6 +22,9 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: 'Firebase Demo: Current Users',
+      // With Streaming data if the data is changed on the Firebase side
+      // those changes are realtime and those changes will be reflected immediately in the app
+      // Use FutureBuilder  and return the first snaphot of the stream Stream.first
       body: StreamBuilder(
         stream: watchUsers(),
         builder: (context, snapshot) {
@@ -40,9 +44,16 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
           return Padding(
             //TODO: move EdgeInsets to source of truth file
             padding: const EdgeInsets.only(top: 12.0),
-            child: ListView.builder(
-              itemCount: users?.length,
-              itemBuilder: (context, index) => customListTile(users![index]),
+            child: Column(
+              children: [
+                SizedBox(
+                  child: ListView.builder(
+                    itemCount: users?.length,
+                    itemBuilder: (context, index) =>
+                        customListTile(users![index]),
+                  ),
+                ),
+              ],
             ),
           );
         },

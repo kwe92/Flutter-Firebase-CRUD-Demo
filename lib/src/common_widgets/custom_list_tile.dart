@@ -3,7 +3,7 @@ import 'package:firebasedemo/src/features/create_user/domain/user.dart';
 import 'package:firebasedemo/src/utils/parse_date_time.dart';
 import 'package:flutter/material.dart';
 
-Widget customListTile(UserModel user) {
+Widget customListTile(UserModel user, {void Function()? onTap}) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -13,6 +13,7 @@ Widget customListTile(UserModel user) {
         // color: Colors.deepPurple[200],
       ),
       child: ListTile(
+        onTap: onTap,
         leading: CircleAvatar(
           child: Text(
             user.age.toString(),
