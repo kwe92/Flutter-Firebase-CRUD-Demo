@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/src/constants/source_of_truth.dart';
 import 'package:firebasedemo/src/features/create_user/domain/user.dart';
 import 'package:firebasedemo/src/features/create_user/presentation/custom_text_field.dart';
+import 'package:firebasedemo/src/widgets/main_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatefulWidget {
@@ -37,57 +38,54 @@ class _UserScreenState extends State<UserScreen> {
   DateTime? selectedDate;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: ListView(
-            padding: const EdgeInsets.all(24.0),
-            children: <Widget>[
-              customTextField(
-                controller: nameController,
-                decoration: _decoration(label: 'Name'),
-              ),
-              gaph24,
-              customTextField(
-                  controller: ageController,
-                  decoration: _decoration(label: 'Age'),
-                  keyboardType: TextInputType.number),
-              gaph24,
-              customSizedBox(
-                child: DateTimeField(
-                  mode: DateTimeFieldPickerMode.date,
-                  selectedDate: selectedDate,
-                  onDateSelected: (DateTime value) {
-                    setState(() {
-                      selectedDate = value;
-                    });
-                  },
-                  decoration: _decoration(
-                    label: 'Birthday',
-                  ),
+    return CustomScaffold(
+      title: widget.title,
+      body: Center(
+        child: ListView(
+          padding: const EdgeInsets.all(24.0),
+          children: <Widget>[
+            customTextField(
+              controller: nameController,
+              decoration: _decoration(label: 'Name'),
+            ),
+            gaph24,
+            customTextField(
+                controller: ageController,
+                decoration: _decoration(label: 'Age'),
+                keyboardType: TextInputType.number),
+            gaph24,
+            customSizedBox(
+              child: DateTimeField(
+                mode: DateTimeFieldPickerMode.date,
+                selectedDate: selectedDate,
+                onDateSelected: (DateTime value) {
+                  setState(() {
+                    selectedDate = value;
+                  });
+                },
+                decoration: _decoration(
+                  label: 'Birthday',
                 ),
               ),
-              gaph12,
-              SizedBox(
-                height: 38.0,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (nameController.text.isNotEmpty &&
-                        ageController.text.isNotEmpty) {
-                      _createUser(
-                          name: nameController.text,
-                          age: int.parse(ageController.text),
-                          birthdate: selectedDate);
-                    }
-                  },
-                  child: const Text('Create User'),
-                ),
+            ),
+            gaph12,
+            SizedBox(
+              height: 38.0,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (nameController.text.isNotEmpty &&
+                      ageController.text.isNotEmpty) {
+                    _createUser(
+                        name: nameController.text,
+                        age: int.parse(ageController.text),
+                        birthdate: selectedDate);
+                  }
+                  Navigator.pop(context);
+                },
+                child: const Text('Create User'),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
