@@ -1,5 +1,5 @@
 import 'package:firebasedemo/src/features/create_user/presentation/create_user_screen.dart';
-import 'package:firebasedemo/src/features/view_users/presentation/current_users.dart';
+import 'package:firebasedemo/src/features/view_users/presentation/current_users_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {

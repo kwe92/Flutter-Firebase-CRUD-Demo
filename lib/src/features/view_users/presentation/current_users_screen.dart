@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebasedemo/src/features/create_user/domain/user.dart';
 import 'package:firebasedemo/src/common_widgets/custom_list_tile.dart';
 import 'package:firebasedemo/src/common_widgets/main_scaffold.dart';
+import 'package:firebasedemo/src/utils/stream_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CurrentUserScreen extends StatefulWidget {
@@ -13,9 +14,9 @@ class CurrentUserScreen extends StatefulWidget {
 
 //TODO: Add a data folder and move watchUsers() into a repository as a method | Riverpod
 
-Stream<List<UserModel>> watchUsers() =>
-    FirebaseFirestore.instance.collection('users').snapshots().map((snapshot) =>
-        snapshot.docs.map((doc) => UserModel.fromJSON(doc.data())).toList());
+// Stream<List<UserModel>> watchUsers() =>
+//     FirebaseFirestore.instance.collection('users').snapshots().map((snapshot) =>
+//         snapshot.docs.map((doc) => UserModel.fromJSON(doc.data())).toList());
 
 class _CurrentUserScreenState extends State<CurrentUserScreen> {
   @override
@@ -26,7 +27,7 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
       // those changes are realtime and those changes will be reflected immediately in the app
       // Use FutureBuilder  and return the first snaphot of the stream Stream.first
       body: StreamBuilder(
-        stream: watchUsers(),
+        stream: StreamFireStore.getListDocsData(collectionPath: 'users'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator.adaptive());
@@ -37,16 +38,17 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
             );
           }
 
-          final List<UserModel>? users = snapshot.data;
-
-          //debugPrint(users.toString()); //// Uused for debuging and checking the data recieved from Firebase
+          final List<UserModel>? users =
+              snapshot.data?.map((user) => UserModel.fromJSON(user)).toList();
+          debugPrint(users
+              .toString()); //// Uused for debuging and checking the data recieved from Firebase
 
           return Padding(
             //TODO: move EdgeInsets to source of truth file
             padding: const EdgeInsets.only(top: 12.0),
             child: Column(
               children: [
-                SizedBox(
+                Expanded(
                   child: ListView.builder(
                     itemCount: users?.length,
                     itemBuilder: (context, index) =>
