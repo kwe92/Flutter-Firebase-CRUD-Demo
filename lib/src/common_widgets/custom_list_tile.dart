@@ -3,7 +3,9 @@ import 'package:firebasedemo/src/features/create_user/domain/user.dart';
 import 'package:firebasedemo/src/utils/parse_date_time.dart';
 import 'package:flutter/material.dart';
 
-Widget customListTile(UserModel user, {void Function()? onTap}) {
+// User Screen List Tiles
+Widget customListTile(
+    {required UserModel user, required void Function() onTap}) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -21,11 +23,11 @@ Widget customListTile(UserModel user, {void Function()? onTap}) {
         ),
         title: Text(
           user.name,
-          style: nameListTileTextStyle,
+          style: CustomTextStyles.nameListTileTextStyle,
         ),
         subtitle: Text(
           // According to Law of Demeter should we move the parser??
-          parseDateTime(user.birthdate),
+          Parser.parseDateTime(user.birthdate),
         ),
       ),
     ),
