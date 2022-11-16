@@ -15,7 +15,7 @@ class CustomScaffold extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: FittedBox(child: Text(title)),
         ),
         body: body,
         floatingActionButton: floatingActionButton,
