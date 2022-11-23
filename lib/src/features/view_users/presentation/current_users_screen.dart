@@ -40,6 +40,7 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
               child: Text(snapshot.error.toString()),
             );
           }
+          // ignore: todo
           //TODO: Handle if the snapshot data is empty
           // snapshot has data
           final List<UserModel> users = [
@@ -52,10 +53,10 @@ class _CurrentUserScreenState extends State<CurrentUserScreen> {
 
           // Build Users ListTile
           return Padding(
-            //TODO: move EdgeInsets to source of truth file
             padding: CustomEdgeInsets.top12,
             child: Column(
               children: [
+                const Text('List of Current Users'),
                 Expanded(
                   child: ListView.builder(
                     itemCount: users.length,

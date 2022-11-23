@@ -7,6 +7,7 @@ import 'package:firebasedemo/src/features/create_user/domain/user.dart';
 import 'package:firebasedemo/src/common_widgets/custom_text_field.dart';
 import 'package:firebasedemo/src/common_widgets/main_scaffold.dart';
 
+// ignore: todo
 //TODO: Pass data to this screen
 
 // class UpdateDeleteScreen
